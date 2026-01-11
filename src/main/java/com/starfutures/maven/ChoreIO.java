@@ -21,7 +21,7 @@ public class ChoreIO {
 	private String basePath; //string to store the path to the app.
 	private String chorePath = "/ChoreListGenerator_Inputs/ChorePool.csv"; // the path/name of the chore list file.
 	private String peoplePath = "/ChoreListGenerator_Inputs/PeoplePool.csv"; //the path for the list of people.
-	private String outputPath = "/ChorelistGenerator_Output/ChoreList.csv";
+	private String outputPath = "/ChorelistGenerator_Output/ChoreList.xlsx"; //updated extension to be xlsx to support formatting.
 	private static String templateChorePath = "/templates/ChorePool.csv";
 	private static String templatePeoplePath = "/templates/PeoplePool.csv";
 	private List<String[]> peoplePool;
