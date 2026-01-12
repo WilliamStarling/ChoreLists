@@ -101,22 +101,13 @@ public class ChoreIO {
 	// version that uses a list of Choreboy objects instead of list of strings, to allow for formatting.
 	public void outputList(List<ChoreBoy> choreBoyList)
 	{
-		List<String> listHeader = List.of("Chores To Do", "Extra Description", "Housekeeper");
-		List<String> blankHeader = List.of("", "", "", "");
 		
 		//create a workbook
 		Workbook workbook = new XSSFWorkbook();
 		//create a sheet
 		Sheet sheet = workbook.createSheet("ChoreList");
-		//tack on the header row and blank row.
-		writeRow(sheet, listHeader);
-		writeRow(sheet, blankHeader);
 		
-		// add all the chores for each chore boy.
-		for(ChoreBoy choreBoy: choreBoyList)
-		{
-			writeChoreBoy(sheet, choreBoy);
-		}
+		ListFormatting formattedList = new ListFormatting(workbook, sheet, choreBoyList);
 		
 		try(FileOutputStream fileOut = new FileOutputStream(outputPath))
 		{
@@ -126,36 +117,6 @@ public class ChoreIO {
 		catch(IOException e)
 		{
 			e.printStackTrace();
-		}
-	}
-	
-	//overloaded function to work with lists instead of string arrays.
-	//function to write a list of strings to a row on a spreadsheet.
-	private static void writeRow(Sheet sheet, List<String> values) {
-		//get the number for the next row.
-		int nextRowNumb = sheet.getLastRowNum() + 1;
-		//create a new row
-		Row newRow = sheet.createRow(nextRowNumb);
-		//iteratively fill in each cell of the new row
-	    for (int col = 0; col < values.size(); col++) {
-	        newRow.createCell(col).setCellValue(values.get(col));
-	    }
-	}
-	
-	private static void writeChoreBoy(Sheet sheet, ChoreBoy choreBoy)
-	{
-		List<String[]> chores = choreBoy.getPersonalList();
-		String[] choreBoyDetails = choreBoy.getBoyDetails();
-		
-		for(String[] chore : chores)
-		{
-			//create a chore entry with the chore as well as the person details.
-			List<String> choreEntry = new ArrayList<>();
-			choreEntry.addAll(Arrays.asList(chore));
-			choreEntry.addAll(Arrays.asList(choreBoyDetails));
-			
-			//add the chore to the list
-			writeRow(sheet, choreEntry);
 		}
 	}
 
